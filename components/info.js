@@ -99,6 +99,9 @@ export default function Info() {
     if (auth) {
       var cachedUser = (JSON.parse(auth).key)
       console.log(cachedUser)
+      
+      // None of this works - Rage.
+
       // // const jsonUser = {key: 'cody'}
       // var newUser = { key: 'someone-else', name: 'John' };
       // // user.username = JSON.parse(auth).key;
