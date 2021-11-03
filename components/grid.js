@@ -18,7 +18,7 @@ export default function Grids() {
                   Align teams faster with live user insights by gradually
                   releasing new features.
                 </p>
-                <Image size="small" src="/Teamwork_onLight.png" centered />
+                {/* <Image size="small" src="/Teamwork_onLight.png" centered /> */}
               </Grid.Column>
               <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
                 <Header as="h3" style={{ fontSize: "2em" }}>
@@ -28,7 +28,7 @@ export default function Grids() {
                   Drive efficiency with less risk through automated governance
                   and remediation.
                 </p>
-                <Image size="small" src="/Waterfall_onLight.png" centered />
+                {/* <Image size="small" src="/Waterfall_onLight.png" centered /> */}
               </Grid.Column>
               <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
                 <Header as="h3" style={{ fontSize: "2em" }}>
@@ -38,7 +38,7 @@ export default function Grids() {
                   Optimize the cloud journey with safe, progressive migrations
                   and re-architecting.
                 </p>
-                <Image size="small" src="/Rocket_onLight.png" centered />
+                {/* <Image size="small" src="/Rocket_onLight.png" centered /> */}
               </Grid.Column>
             </Grid.Row>
           </Grid>
