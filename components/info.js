@@ -69,13 +69,23 @@ export default function Info() {
     LDClient.identify(user).then(console.log(LDClient.getUser()));
     toast.success("Your LaunchDarkly user is " + userState.username);
     Array.from(document.querySelectorAll("input")).forEach(
-      input => (input.value = "")
-    )
+      (input) => (input.value = "")
+    );
   };
 
   const getUser = () => {
-    console.log(LDClient.getUser());
-    toast.success("Your LaunchDarkly user is " + userState.username);
+    const curUser = LDClient.getUser();
+    console.log(curUser.anonymous);
+    if (
+      curUser.anonymous ||
+      curUser.key == null ||
+      curUser.key == "anonymous"
+    ) {
+      toast.error("You are using the Anonymous user");
+      return curUser;
+    }
+    toast.success("Your LaunchDarkly user is " + curUser.key);
+    return curUser;
   };
 
   const submitLogout = () => {
@@ -83,8 +93,8 @@ export default function Info() {
     LDClient.identify(JSON.parse('{"key":"anonymous"}'));
     toast.error("You have cleared the login cache");
     Array.from(document.querySelectorAll("input")).forEach(
-      input => (input.value = "")
-    )
+      (input) => (input.value = "")
+    );
   };
 
   var brandLocation;
@@ -97,9 +107,9 @@ export default function Info() {
   function getCachedAuth() {
     const auth = localStorage.getItem("user_key");
     if (auth) {
-      var cachedUser = (JSON.parse(auth).key)
-      console.log(cachedUser)
-      
+      var cachedUser = JSON.parse(auth).key;
+      console.log(cachedUser);
+
       // None of this works - Rage.
 
       // // const jsonUser = {key: 'cody'}
@@ -110,8 +120,8 @@ export default function Info() {
       // // console.log(user.username)
       // // console.log("hi"+JSON.stringify(userState))
       // LDClient.identify(user);
-      toast.success("Your LaunchDarkly user is " + JSON.stringify(userState));
-      return auth
+      // toast.success("Your LaunchDarkly user is " + JSON.stringify(userState));
+      return auth;
     }
     console.log("No cached storage found");
     return;
@@ -121,37 +131,69 @@ export default function Info() {
     getCachedAuth();
   }, []);
 
-
   return (
     <StyleRoot>
       {name ? (
+        <Container>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{}}
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 5000,
+            style: {
+              background: "#00000",
+              color: "#fffff",
+            },
+            // Default options for specific types
+            success: {
+              icon: "🚀",
+              style: {
+                fontSize: 22,
+                background: "black",
+                color: "white",
+              },
+            },
+            error: {
+              icon: "⚠️",
+              style: {
+                fontSize: 22,
+                background: "orange",
+                color: "white",
+              },
+            },
+          }}
+        />
+        {reduceimage ? (
+          <div style={styles.zoomleft}>
+            <Image
+              src={brandLocation}
+              size="medium"
+              alt="launch-darkly"
+              centered
+            />
+          </div>
+        ) : (
+          <div style={styles.zoomleft}>
+            <Image
+              src={brandLocation}
+              size="big"
+              alt="launch-darkly"
+              centered
+            />
+          </div>
+        )}
+      </Container>
+      ) : (
         <div style={styles.rollin}>
           <span>
             <h1>What are we building with today?</h1>
           </span>
         </div>
-      ) : (
-        <Container>
-          {reduceimage ? (
-            <div style={styles.zoomleft}>
-              <Image
-                src={brandLocation}
-                size="medium"
-                alt="launch-darkly"
-                centered
-              />
-            </div>
-          ) : (
-            <div style={styles.zoomleft}>
-              <Image
-                src={brandLocation}
-                size="big"
-                alt="launch-darkly"
-                centered
-              />
-            </div>
-          )}
-        </Container>
       )}
       {userbuttons ? (
         <Segment>
@@ -168,6 +210,7 @@ export default function Info() {
                   />
 
                   <Button
+                    basic
                     type="submit"
                     color="green"
                     size="large"
@@ -175,39 +218,6 @@ export default function Info() {
                   >
                     Submit
                   </Button>
-                  <Toaster
-                    position="bottom-center"
-                    reverseOrder={false}
-                    gutter={8}
-                    containerClassName=""
-                    containerStyle={{}}
-                    toastOptions={{
-                      // Define default options
-                      className: "",
-                      duration: 5000,
-                      style: {
-                        background: "#00000",
-                        color: "#fffff"
-                      },
-                      // Default options for specific types
-                      success: {
-                        icon: '🚀',
-                        style: {
-                          fontSize: 22,
-                          background: "black",
-                          color: "white"
-                        },
-                      },
-                      error: {
-                        icon: '⚠️',
-                        style: {
-                          fontSize: 22,
-                          background: "orange",
-                          color: "white"
-                        }
-                      }
-                    }}
-                  />
                 </Form>
               </Grid.Column>
             </Grid>
@@ -215,6 +225,7 @@ export default function Info() {
           <Grid>
             <Grid.Column textAlign="center">
               <Button
+                basic
                 type="submit"
                 color="blue"
                 // fluid
@@ -224,6 +235,7 @@ export default function Info() {
                 Get User
               </Button>
               <Button
+                basic
                 type="submit"
                 color="red"
                 // fluid
