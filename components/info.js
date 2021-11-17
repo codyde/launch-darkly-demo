@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useFlags, useLDClient } from "launchdarkly-react-client-sdk";
-import {
-  Form,
-  Grid,
-  Button,
-  Header,
-  Container,
-  Segment,
-  Image,
-} from "semantic-ui-react";
 import { rollIn, zoomInDown, zoomInLeft } from "react-animations";
 import Radium, { StyleRoot } from "radium";
 import toast, { Toaster } from "react-hot-toast";
@@ -30,7 +21,7 @@ const styles = {
 };
 
 export default function Info() {
-  const { name, reduceimage, userbuttons, brandImage, userLogin } = useFlags();
+  const { loginBoxColor, brandImage, userLogin } = useFlags();
   const LDClient = useLDClient();
 
   const [userState, setUserState] = useState({
@@ -58,13 +49,8 @@ export default function Info() {
     key: userState.username,
   };
 
-  // const anon = {
-  //   key: 'anonymous',
-  // };
-
-  const submitUser = () => {
-    // setUserState(userState);
-    // console.log(userState);
+  const submitUser = (e) => {
+    e.preventDefault()
     login(user);
     LDClient.identify(user).then(console.log(LDClient.getUser()));
     toast.success("Your LaunchDarkly user is " + userState.username);
@@ -109,18 +95,6 @@ export default function Info() {
     if (auth) {
       var cachedUser = JSON.parse(auth).key;
       console.log(cachedUser);
-
-      // None of this works - Rage.
-
-      // // const jsonUser = {key: 'cody'}
-      // var newUser = { key: 'someone-else', name: 'John' };
-      // // user.username = JSON.parse(auth).key;
-      // // console.log(user)
-      // setUserState(newUser)
-      // // console.log(user.username)
-      // // console.log("hi"+JSON.stringify(userState))
-      // LDClient.identify(user);
-      // toast.success("Your LaunchDarkly user is " + JSON.stringify(userState));
       return auth;
     }
     console.log("No cached storage found");
@@ -133,121 +107,54 @@ export default function Info() {
 
   return (
     <StyleRoot>
-      {name ? (
-        <Container>
-        <Toaster
-          position="bottom-center"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{}}
-          toastOptions={{
-            // Define default options
-            className: "",
-            duration: 5000,
-            style: {
-              background: "#00000",
-              color: "#fffff",
-            },
-            // Default options for specific types
-            success: {
-              icon: "🚀",
-              style: {
-                fontSize: 22,
-                background: "black",
-                color: "white",
-              },
-            },
-            error: {
-              icon: "⚠️",
-              style: {
-                fontSize: 22,
-                background: "orange",
-                color: "white",
-              },
-            },
-          }}
-        />
-        {reduceimage ? (
-          <div style={styles.zoomleft}>
-            <Image
-              src={brandLocation}
-              size="medium"
-              alt="launch-darkly"
-              centered
-            />
-          </div>
-        ) : (
-          <div style={styles.zoomleft}>
-            <Image
-              src={brandLocation}
-              size="big"
-              alt="launch-darkly"
-              centered
-            />
-          </div>
-        )}
-      </Container>
-      ) : (
-        <div style={styles.rollin}>
-          <span>
-            <h1>What are we building with today?</h1>
-          </span>
-        </div>
-      )}
-      {userbuttons ? (
-        <Segment>
-          {userLogin ? (
-            <Grid>
-              <Grid.Column textAlign="center">
-                <Form>
-                  <Form.Input
-                    label="Name"
-                    placeholder="Name"
-                    id="username"
-                    value={userState.username}
-                    onChange={handleChange}
-                  />
-
-                  <Button
-                    basic
+      {userLogin ? (
+        <div className="flex justify-center items-center py-4 px-8">
+          <div
+            className={`w-full ${loginBoxColor} rounded-2xl p-10 bg-blue-400 shadow-2xl`}
+          >
+            <form>
+              <h1 className="text-center font-bold text-white text-4xl">
+                Login With Your Username
+              </h1>
+              <p className="mx-auto font-normal text-white my-6 max-w-lg">
+                This login field will create a user object with the LaunchDarkly
+                SDK. This user object can be used to interact with targeting
+                rules allowing specific feature configurations to be enabled or
+                disabled based on users.
+              </p>
+              <div className="flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between">
+                <input
+                  className="text-base text-gray-400 flex-grow outline-none px-2 "
+                  type="input"
+                  id="username"
+                  placeholder="Enter Username"
+                  value={userState.username}
+                  onChange={handleChange}
+                />
+                <div className="flex items-center px-2 rounded-lg space-x-4 mx-auto ">
+                  <button
                     type="submit"
-                    color="green"
-                    size="large"
+                    className="bg-green-500 text-white text-base rounded-lg px-4 py-2 font-thin"
                     onClick={submitUser.bind(userState)}
                   >
                     Submit
-                  </Button>
-                </Form>
-              </Grid.Column>
-            </Grid>
-          ) : null}
-          <Grid>
-            <Grid.Column textAlign="center">
-              <Button
-                basic
-                type="submit"
-                color="blue"
-                // fluid
-                size="large"
-                onClick={getUser.bind()}
-              >
-                Get User
-              </Button>
-              <Button
-                basic
-                type="submit"
-                color="red"
-                // fluid
-                size="large"
-                onClick={submitLogout.bind()}
-              >
-                Clear User
-              </Button>
-            </Grid.Column>
-          </Grid>
-        </Segment>
-      ) : null}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : (
+        <div style={styles.rollin}>
+          <div className="grid text-center items-center justify-center bg-gray-900 bg-opacity-50 rounded-2xl px-9">
+            <div className="mx-auto text-aws text-5xl text-center italic py-10">
+              A long time ago, at a re:Invent far, far, away... 
+            </div>
+            <img className="mx-auto" src="./ld-white.png" alt="launch-darkly" />
+          </div>
+          <div></div>
+        </div>
+      )}
     </StyleRoot>
   );
 }

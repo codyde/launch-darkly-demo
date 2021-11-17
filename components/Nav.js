@@ -1,32 +1,38 @@
-import { Menu, Container, Dropdown, Image } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
 import { useFlags } from "launchdarkly-react-client-sdk";
 
-export default function Nav() {
-  const { header } = useFlags();
-  console.log(header);
+export default function Nav(props) {
+  const { toggle } = useFlags();
+  const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     // TODO: Feature flag around menu config? Sidenav vs topnav? Or maybe just menu options?
     <div>
-      {header ? (
-        <Menu fixed="top" inverted>
-          <Container>
-            <Menu.Item as="a" header>
-              Launch-Demo
-            </Menu.Item>
-            <Menu.Item as="a">Home</Menu.Item>
-            <Dropdown item simple text="Dropdown">
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Header>Header Item</Dropdown.Header>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Container>
-        </Menu>
+      {toggle ? (
+        <nav
+          className={`h-screen flex
+           justify-center items-center px-2`}
+        >
+            <div className="row-start-1 justify-center items-center">
+              <ul>
+                <li>
+                  <img src="./toggle_thumbsup.png" width="400" alt="launch-darkly" />
+                </li>
+              </ul>
+            </div>   
+        </nav>   
       ) : (
-        <div />
+        <nav
+          className={`h-screen flex
+           justify-center items-center px-2`}
+        >
+            <div className="justify-center items-center">
+              <ul>
+                <li>
+                  <img src="./ld-white.png" width="400" alt="launch-darkly" />
+                </li>
+              </ul>
+            </div>   
+        </nav>  
       )}
     </div>
   );

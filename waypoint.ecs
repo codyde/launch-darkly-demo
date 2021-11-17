@@ -1,0 +1,22 @@
+project = "darkly-demo"
+
+app "ldd" {
+
+    build {
+        use "docker" {}
+	registry {
+	  use "aws-ecr" {
+	  region = "us-west-1"
+	  repository = "ld-demo"
+	  tag = "latest"
+	}
+	}
+    }
+
+    deploy {
+        use "aws-ecs" {
+	  region = "us-west-1"
+	  memory = "1024"
+	}
+    }
+}

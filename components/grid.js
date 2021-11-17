@@ -1,49 +1,34 @@
-import { Image, Grid, Header, Segment } from "semantic-ui-react";
 import { useFlags } from "launchdarkly-react-client-sdk";
 
 export default function Grids() {
-  const { cards } = useFlags();
+  const { darkMode } = useFlags();
 
   return (
-    <div>
-      {cards ? (
-        <Segment style={{ padding: "0em" }} vertical>
-          <Grid celled="internally" columns="equal" stackable>
-            <Grid.Row textAlign="center">
-              <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-                <Header as="h3" style={{ fontSize: "2em" }}>
-                  Test Innovations Collaboratively
-                </Header>
-                <p style={{ fontSize: "1.33em" }}>
-                  Align teams faster with live user insights by gradually
-                  releasing new features.
-                </p>
-                {/* <Image size="small" src="/Teamwork_onLight.png" centered /> */}
-              </Grid.Column>
-              <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-                <Header as="h3" style={{ fontSize: "2em" }}>
-                  Standarize Safe Releases
-                </Header>
-                <p style={{ fontSize: "1.33em" }}>
-                  Drive efficiency with less risk through automated governance
-                  and remediation.
-                </p>
-                {/* <Image size="small" src="/Waterfall_onLight.png" centered /> */}
-              </Grid.Column>
-              <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
-                <Header as="h3" style={{ fontSize: "2em" }}>
-                  Accelerate and Modernize Application Release
-                </Header>
-                <p style={{ fontSize: "1.33em" }}>
-                  Optimize the cloud journey with safe, progressive migrations
-                  and re-architecting.
-                </p>
-                {/* <Image size="small" src="/Rocket_onLight.png" centered /> */}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      ) : null}
-    </div>
+        <div className="grid grid-cols-4 justify-center">
+          <div className={` ${darkMode} w-full px-3`}>
+            <h1>Release Confidently</h1>
+            <p className="text-2xl">
+            Deploy features whenever you want. Release to users when you’re ready.
+            </p>
+          </div>
+          <div className={` ${darkMode} w-full px-3`}>
+            <h1>Improve Reliability</h1>
+            <p className="text-2xl">
+            Rest easy with instant rollbacks. Resolve incidents as soon as they happen.
+            </p>
+          </div>
+          <div className={` ${darkMode} w-full px-3`}>
+            <h1>Safely Migrate Systems</h1>
+            <p className="text-2xl">
+            Take the risk and uncertainty out of cloud, microservices, and database migrations.
+            </p>
+          </div>
+          <div className={` ${darkMode} w-full px-3`}>
+            <h1>Automate DevOps Workflows</h1>
+            <p className="text-2xl">
+            Streamline your release process while ensuring enterprise compliance.
+            </p>
+          </div>
+        </div>
   );
 }
