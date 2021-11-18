@@ -110,7 +110,7 @@ export default function Info() {
       {userLogin ? (
         <div className="flex justify-center items-center py-4 px-8">
           <div
-            className={`w-full ${loginBoxColor} rounded-2xl p-10 bg-blue-400 shadow-2xl`}
+            className={`${loginBoxColor} w-full rounded-2xl p-10 shadow-2xl`}
           >
             <form>
               <h1 className="text-center font-bold text-white text-4xl">
@@ -145,9 +145,9 @@ export default function Info() {
           </div>
         </div>
       ) : (
-        <div style={styles.rollin}>
-          <div className="grid text-center items-center justify-center bg-gray-900 bg-opacity-50 rounded-2xl px-9">
-            <div className="mx-auto text-aws text-5xl text-center italic py-10">
+        <div style={styles.bounce}>
+          <div className="grid text-center items-center justify-center bg-gray-900 bg-opacity-80 rounded-3xl px-9">
+            <div className="mx-auto text-aws text-5xl font-bolt text-center italic py-10">
               A long time ago, at a re:Invent far, far, away... 
             </div>
             <img className="mx-auto" src="./ld-white.png" alt="launch-darkly" />

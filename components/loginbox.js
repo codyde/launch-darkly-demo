@@ -76,13 +76,6 @@ export default function Loginbox() {
     );
   };
 
-  var brandLocation;
-  if (brandImage == true) {
-    brandLocation = "/ld2.png";
-  } else {
-    brandLocation = "/ld.png";
-  }
-
   function getCachedAuth() {
     const auth = localStorage.getItem("user_key");
     if (auth) {
@@ -100,13 +93,12 @@ export default function Loginbox() {
 
   return (
     <StyleRoot>
-      <div className="flex justify-center items-center px-8">
         <div className={`${loginBoxColor} w-full rounded-2xl p-4 shadow-2xl`}>
           <form>
             <h1 className="text-center font-bold text-white text-4xl">
               Login With Your Username
             </h1>
-            <p className="mx-auto font-normal text-white my-6 max-w-lg">
+            <p className="mx-auto font-normal invisible md:visible text-white my-6 max-w-lg">
               This login field will create a user object with the LaunchDarkly
               SDK. This user object can be used to interact with targeting rules
               allowing specific feature configurations to be enabled or disabled
@@ -121,7 +113,7 @@ export default function Loginbox() {
                 value={userState.username}
                 onChange={handleChange}
               />
-              <div className="ms:flex items-center px-2 rounded-lg space-x-4 mx-auto ">
+              <div className="flex items-center px-2 rounded-lg space-x-4 mx-auto ">
                 <button
                   type="submit"
                   className="bg-green-500 text-white text-base rounded-lg px-4 py-2 font-thin"
@@ -149,7 +141,6 @@ export default function Loginbox() {
             </div>
           </form>
         </div>
-      </div>
     </StyleRoot>
   );
 }
