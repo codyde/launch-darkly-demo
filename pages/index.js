@@ -2,6 +2,7 @@ import Head from "next/head";
 import Info from "../components/info.js";
 import Nav from "../components/Nav.js";
 import Loginbox from "../components/loginbox.js";
+import Connection from "../components/connection.js"
 import Intro from "../components/intro.js";
 import Grids from "../components/grid.js";
 import "semantic-ui-css/semantic.min.css";
@@ -9,7 +10,7 @@ import { useFlags, useLDClient } from "launchdarkly-react-client-sdk";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
-  const { uiEnable, showCards, toggle, userLogin, darkMode } = useFlags();
+  const { uiEnable, showCards, toggle, userLogin, darkMode, apiConfig } = useFlags();
   const LDClient = useLDClient();
   return (
     <div className="h-screen">
@@ -69,7 +70,11 @@ export default function Home() {
                 </div>
               )}
               <div className="grid col-span-4 m-auto mx-auto row-start-2 w-3/4 py-4 p-5">
-                <Loginbox />
+                {apiConfig ?
+                  <Connection />
+                  :
+                  <Loginbox />
+                }
               </div>
               <div className="grid col-span-4 mx-auto row-start-3 w-3/4 justify-center items-center">
                 {showCards ? <Grids /> : <div />}

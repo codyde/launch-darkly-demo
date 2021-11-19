@@ -3,9 +3,7 @@ import { useFlags } from "launchdarkly-react-client-sdk";
 
 export default function Nav(props) {
   const { showCards, uiEnable, userLogin, darkMode, loginBoxColor, toggle } = useFlags();
-  const [navbarOpen, setNavbarOpen] = useState(false);
   return (
-    // TODO: Feature flag around menu config? Sidenav vs topnav? Or maybe just menu options?
     <div>
       {userLogin && !uiEnable && !showCards && darkMode == "text-black" && loginBoxColor == 'bg-black' ? (
         <div className="text-xl">
